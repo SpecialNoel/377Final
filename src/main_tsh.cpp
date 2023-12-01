@@ -4,51 +4,24 @@ using namespace std;
 
 int main() {
   char cmd[81];
-  char *cmdTokens1[25];
-  char *cmdTokens2[25];
+  CmdTokens *tokens = new CmdTokens();
   simple_shell *shell = new simple_shell();
-
-
-  /*
-  int pid = fork();
-  if (pid < 0) {
-    cout << "Fork failed to execute\n.";
-    exit(1);
-  } else if (pid == 0) {
-    cout << "tsh> ";
-    while (fgets(cmd, sizeof(cmd), stdin)) {
-      if (cmd[0] != '\n') {
-	shell->parse_command(cmd, cmdTokens1, cmdTokens2);
-	if (shell->isQuit(*cmdTokens1)) {
-	  exit(0);
-	} else {
-	  shell->exec_command(cmdTokens1, cmdTokens2);	  
-	}
-      }
-      cout << "tsh> ";
-    }
-  } else {
-    int waiting = waitpid(pid, NULL, 0);
-    exit(0);
-  }
-  */
-
-
+  
   cout << "tsh> ";
   while (fgets(cmd, sizeof(cmd), stdin)) {
     if (cmd[0] != '\n') {
-      shell->parse_command(cmd, cmdTokens1, cmdTokens2);
+      shell->parse_command(cmd, &tokens);
       
-      if (shell->isQuit(*cmdTokens1)) {                                                 
+      if (shell->isQuit(tokens->cmd[0])) {                                                 
         exit(0);
-      } else if (shell->isPrintf(cmdTokens1[0])) {
-	shell->printf_command(cmdTokens1);
-	cout << endl;
-      } else if (shell->isHelp(cmdTokens1[0])) {
-	shell->help_command();
+      } else if (shell->isPrintf(tokens->cmd[0])) {
+	      shell->printf_command(tokens->cmd);
+	      cout << endl;
+      } else if (shell->isHelp(tokens->cmd[0])) {
+	      shell->help_command();
       } else {
-	// only this command supports pipe commands
-        shell->exec_command(cmdTokens1, cmdTokens2);
+	      // only this command supports pipe commands
+        // shell->exec_command(cmdTokens1, cmdTokens2);
       }
       
     }

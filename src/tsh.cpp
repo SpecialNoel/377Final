@@ -7,58 +7,43 @@
 
 using namespace std;
 
-void simple_shell::parse_command(char* cmd, char** cmdTokens1, char** cmdTokens2) {
-  // Tokenize the command string into arguments                                              
+void simple_shell::parse_command(char* cmd, CmdTokens** tokens) {
+  // Tokenize the command string into arguments     
 
-  string cmdStr = cmd;
-  string tempStr1 = "";
-  string tempStr2 = "";
-  int counter1 = 0;
-  int counter2 = 0;
-  bool indicator = false;
-  
-  memset(cmdTokens1, '\0', 25);
-  memset(cmdTokens2, '\0', 25);
-  
-  for (int i = 0; i < cmdStr.length() - 1; i++) {
-    if (cmdStr[i] == '|') {
-      indicator = true;
+  // Checks if cmd is valid 
+  size_t length = strlen(cmd);
+  if (length > 0 && cmd[length - 1] == '\n') {
+    cmd[length - 1] = '\0';
+  }
+
+  // Splits cmd via whitespace
+  char *temp = strtok(cmd, " ");
+  char **cmdTokens = (char**) malloc(sizeof(char));
+
+  int i = 0;
+  CmdTokens* curr = *tokens;
+  while (temp != NULL) {
+    // If it finds pipe
+    if (strcmp(temp, "|") == 0) {
+      // Finalizing data
+      cmdTokens[i] = NULL;
+      curr->cmd = cmdTokens;
+      // Creating new struct & continueing to finalize data
+      CmdTokens *t = (CmdTokens*) malloc(sizeof(CmdTokens*));
+      curr->pipe = t;
+      // resetting data
+      curr = t;
+      cmdTokens = (char**) malloc(sizeof(char));
+      i = 0;
+      temp = strtok(NULL, " ");
     } else {
-      if (cmdStr[i] != ' ' && !indicator) {
-        tempStr1 += cmdStr[i];
-      } else if (cmdStr[i] != ' ' && indicator) {
-        tempStr2 += cmdStr[i];
-      } else {                                                                     
-        if (!indicator) {
-          char* newCopy = (char*)malloc(sizeof(strlen(tempStr1.c_str())) * sizeof(char));
-          strcpy(newCopy, tempStr1.c_str());
-          cmdTokens1[counter1++] = newCopy;
-          tempStr1 = "";
-        } else {
-          if (tempStr2.length() != 0) {
-            char* newCopy = (char*)malloc(sizeof(strlen(tempStr2.c_str())) * sizeof(char));
-            strcpy(newCopy, tempStr2.c_str());
-            cmdTokens2[counter2++] = newCopy;
-            tempStr2 = "";
-          }
-        }
-      }
+      cmdTokens[i++] = temp;
+      temp = strtok(NULL, " ");
     }
   }
-  
-  if (!indicator) {
-    if (tempStr1.length() != 0) {
-      char* newCopy = (char*)malloc(sizeof(strlen(tempStr1.c_str())) * sizeof(char));
-      strcpy(newCopy, tempStr1.c_str());
-      cmdTokens1[counter1++] = newCopy;
-    }
-  } else {
-    if (tempStr2.length() != 0) {
-      char* newCopy = (char*)malloc(sizeof(strlen(tempStr2.c_str())) * sizeof(char));
-      strcpy(newCopy, tempStr2.c_str());
-      cmdTokens2[counter2++] = newCopy;
-    }
-  }  
+  // Finalizing to final struct
+  cmdTokens[i] = NULL;
+  curr->cmd = cmdTokens;
 }
 
 void simple_shell::exec_command(char** argv1, char** argv2) {
@@ -90,6 +75,7 @@ void simple_shell::exec_command(char** argv1, char** argv2) {
            
       dup2(pipefd[1], STDOUT_FILENO);
       close(pipefd[0]);
+      cout << cmdOp1 << endl;
       execvp(cmdOp1.data(), argv1);
 
       perror("execvp error in child 1");
@@ -139,7 +125,7 @@ void simple_shell::exec_command(char** argv1, char** argv2) {
   }
 }
 
-void simple_shell::printf_command(char **cmdTokens, ...) {
+void simple_shell::printf_command(char**cmdTokens, ...) {
     // Check if there are arguments after "printf"
     if (cmdTokens[1] == nullptr) {
         std::cerr << "printf: missing arguments" << std::endl;
