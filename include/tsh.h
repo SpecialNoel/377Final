@@ -20,9 +20,16 @@ class simple_shell {
   void exec_command(char** argv1, char** argv2);
   void printf_command(char **cmdTokens, ...);
   void help_command();
+  void read_command(char** cmdTokens, ...);
+  void echo_command(char **cmdTokens, ...);
   bool isQuit(char* cmd);
   bool isHelp(char* cmd);
   bool isPrintf(char* cmd);
+  bool isEcho(char* cmd);
+  bool isRead(char* cmd);
+  // storing the last line that was entered into the "read" command in a pair with it's variable
+  // "$REPLY" if no variable provided
+  std::pair<std::string, std::string> read_line;
 };
 
 #endif

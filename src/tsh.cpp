@@ -49,7 +49,6 @@ void simple_shell::parse_command(char* cmd, CmdTokens** tokens) {
 void simple_shell::exec_command(char** argv1, char** argv2) {
   // Fork a child process to execute the command.
   // Then return and pass result as input to the parent process.
-
   int counter = 0;
   for (char **temp = argv2; *temp; ++temp) {
     counter++;
@@ -149,10 +148,49 @@ void simple_shell::printf_command(char**cmdTokens, ...) {
 void simple_shell::help_command() {
     // Provide information about available commands
     cout << "Welcome to the simple shell!" << endl;
-    cout << "printf to print" << endl;
+    cout << "  printf to print" << endl;
+    cout << "  echo - Output provided arguments" << endl;
     cout << "  help - Display this help message" << endl;
     cout << "  quit - Exit the shell" << endl;
+    cout << "  read - Read and store one line from standard input" << endl;
     // Add information about other built-in commands if needed
+}
+
+void simple_shell::read_command(char** cmdTokens, ...) {
+  string formatString;
+  for (int i = 1; cmdTokens[i] != nullptr; ++i) {
+      formatString += cmdTokens[i];
+      formatString += " ";
+  }
+  // Store the provided read variable in the second value of read_line pair in simple_shell class
+  read_line.second = formatString;
+  // Prompt user for standard input, stored in the first value of read_line pair in simple_shell class
+  getline(cin, read_line.first);
+}
+
+void simple_shell::echo_command(char** cmdTokens, ...) {
+  // Check if there are arguments after "echo"
+    if (cmdTokens[1] == nullptr) {
+        std::cerr << "echo: missing arguments" << std::endl;
+        return;
+    }
+
+    // Concatenate arguments into a single format string
+    string formatString;
+    for (int i = 1; cmdTokens[i] != nullptr; ++i) {
+        formatString += cmdTokens[i];
+        formatString += " ";
+    }
+    // Check if the echo argument is a stored variable --> print stored variable, "$REPLY" used if no read variable was provided. Else print out provided argument.
+    if((formatString == "$" + read_line.second || formatString == "$REPLY ") && formatString[0] == '$'){
+      cout << read_line.first << endl;
+    } 
+    else {
+      va_list args;
+      va_start(args, formatString.c_str());
+      vprintf(formatString.c_str(), args);
+      va_end(args);
+    }
 }
 
 bool simple_shell::isQuit(char* cmd) {
@@ -174,4 +212,18 @@ bool simple_shell::isPrintf(char* cmd){
   string cmdStr = cmd;
   string PrintfCommand = "printf";
   return (cmdStr.compare(PrintfCommand)==0);
+}
+
+bool simple_shell::isRead(char* cmd) {
+  // check for "read" command
+  string cmdStr = cmd;
+  string readCommand = "read";
+  return(cmdStr.compare(readCommand) == 0);
+}
+
+bool simple_shell::isEcho(char* cmd) {
+  // check for "echo" command
+  string cmdStr = cmd;
+  string echoCommand = "echo";
+  return(cmdStr.compare(echoCommand) == 0);
 }

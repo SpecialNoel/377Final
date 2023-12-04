@@ -19,7 +19,13 @@ int main() {
 	      cout << endl;
       } else if (shell->isHelp(tokens->cmd[0])) {
 	      shell->help_command();
-      } else {
+      } else if (shell->isRead(tokens->cmd[0])) {
+        shell->read_command(tokens->cmd);
+      } else if (shell->isEcho(tokens->cmd[0])) {
+        shell->echo_command(tokens->cmd);
+        cout << endl;
+      } 
+      else {
 	      // only this command supports pipe commands
         // shell->exec_command(cmdTokens1, cmdTokens2);
       }
