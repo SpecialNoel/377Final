@@ -1,6 +1,7 @@
 # 377Final
 
 Install 
+
 Use cd to go to folder of this program and type "make" to install the program. Once it is installed on your computer, you can type ./tsh_app to get into the shell and use it.
 
 Commands
