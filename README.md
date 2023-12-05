@@ -31,7 +31,7 @@ Help:
           Help is a command you can use as a user guide of this simple shell. 
           To use the help command,  you can go to shell and type help. Shell will print out the infromation to help you to use the shell.
 
-         
+```         
 tsh> help
 Welcome to the simple shell!
 printf - Write the formatted arguments to the standard output under the control of the format. 
@@ -39,7 +39,7 @@ help - Display helpful information about builtin commands. If pattern is specifi
 Echo - Print out the line to screen
 Read - One line is read from the standard input, or from the file descriptor fd supplied as an argument
 quit - Exit the shell
-
+```
 Features:
 
 Infinite pipeline:
