@@ -29,6 +29,10 @@ test:
       c
       
       w
+
+      tsh> printf hello world
+      
+      hello world
           
 Help:
           Help is a command you can use as a user guide of this simple shell. 
