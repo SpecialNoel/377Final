@@ -14,25 +14,18 @@ Printf:
 
 
 test:   
-          
-         tsh> printf %bd
-         
-         001001010110001001100100
-
-         tsh> printf %t
-         2023-12-05 17:08:28
-
-      tsh> printf d\nc\nw
-      
-      d
-      
-      c
-      
-      w
-
-      tsh> printf hello world
-      
-      hello world
+```
+tsh> printf %bd
+001001010110001001100100
+tsh> printf %t
+2023-12-05 17:08:28
+tsh> printf d\nc\nw
+d
+c
+w
+tsh> printf hello world
+hello world
+```
           
 Help:
           Help is a command you can use as a user guide of this simple shell. 
