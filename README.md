@@ -2,7 +2,7 @@
 
 Install 
 
-Use cd to go to folder of this program and type "make" to install the program. Once it is installed on your computer, you can type ./tsh_app to get into the shell and use it.
+Use cd to go to folder of this program and type "make" to install the program (NOTE: current Makefile is made for a UMass Edlab machine). Once it is installed on your computer, you can type ./tsh_app to get into the shell and use it.
 
 Commands
 
@@ -16,3 +16,8 @@ Printf:
 Help:
           Help is a command you can use as a user guide of this simple shell. 
           To use the help command,  you can go to shell and type help. Shell will print out the infromation to help you to use the shell.
+
+Features:
+
+Infinite pipeline:
+          The user can pipe as many commands as they would like. Examples: `tsh> ls | sort | grep t`
