@@ -14,15 +14,25 @@ Printf:
 
 
 test:   
+testing %b
 ```
 tsh> printf %bd
 001001010110001001100100
+```
+testing %t
+```
 tsh> printf %t
 2023-12-05 17:08:28
+```
+testing \n
+```
 tsh> printf d\nc\nw
 d
 c
 w
+```
+testing print string
+```
 tsh> printf hello world
 hello world
 ```
