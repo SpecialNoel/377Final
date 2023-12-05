@@ -13,7 +13,10 @@ Printf:
           For exmaple, you can type in printf %bd to get the binrary format of the charater d. 
 
 
-test:    tsh> printf %bd
+test:   
+          
+         tsh> printf %bd
+         
          001001010110001001100100
 
          tsh> printf %t
