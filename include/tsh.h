@@ -16,8 +16,8 @@ struct CmdTokens {
 
 class simple_shell {
  public:
-  void parse_command(char* cmd, CmdTokens** tokens);
-  void exec_command(char** argv1, char** argv2);
+  void parse_command(char* cmd, CmdTokens** tokens, int* tokenCount);
+  void exec_command(CmdTokens* tokens, int tokenCount);
   void printf_command(char **cmdTokens, ...);
   void help_command();
   void read_command(char** cmdTokens, ...);
@@ -27,6 +27,8 @@ class simple_shell {
   bool isPrintf(char* cmd);
   bool isEcho(char* cmd);
   bool isRead(char* cmd);
+  void expand_escape_sequences(const std::string& input, std::string& output);
+  void get_current_timestamp(std::string& output);
   // storing the last line that was entered into the "read" command in a pair with it's variable
   // "$REPLY" if no variable provided
   std::pair<std::string, std::string> read_line;
