@@ -20,9 +20,12 @@ test:    tsh> printf %bd
          2023-12-05 17:08:28
 
       tsh> printf d\nc\nw
-d
-c
-w
+      
+      d
+      
+      c
+      
+      w
 tsh> 
           
 Help:
