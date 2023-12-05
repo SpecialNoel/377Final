@@ -9,6 +9,10 @@ Printf:
           For example, if you like to print out "hello world", you can type in printf hello world. No "" are nesscery. 
           To use the options, you will need to type in '%' after printf command and then, type the option charater after the '%'. 
           For exmaple, you can type in printf %bd to get the binrary format of the charater d. 
+
+
+
+
 Help:
           Help is a command you can use as a user guide of this simple shell. 
           To use the help command,  you can go to shell and type help. Shell will print out the infromation to help you to use the shell.
