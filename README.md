@@ -35,3 +35,35 @@ Features:
 
 Infinite pipeline:
           The user can pipe as many commands as they would like. Examples: `tsh> ls | sort | grep t`
+
+Tests:
+
+2 pipes:
+```
+tsh> ls | sort
+include
+Makefile
+obj
+README.md
+src
+submission.zip
+test
+tsh_app
+tsh_test
+```
+
+3 pipes:
+```
+tsh> ls | sort | grep t
+test
+tsh_app
+tsh_test
+```
+
+4 pipes:
+```
+tsh> cat src/tsh.cpp | grep string | grep c | grep f
+  // cat src/tsh.cpp | grep string | grep c | grep f
+    // Concatenate arguments into a single format string
+    // Call printf with the concatenated format string
+```
