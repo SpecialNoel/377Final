@@ -12,6 +12,19 @@ Printf:
           To use the options, you will need to type in '%' after printf command and then, type the option charater after the '%'. 
           For exmaple, you can type in printf %bd to get the binrary format of the charater d. 
 
+
+test:    tsh> printf %bd
+         001001010110001001100100
+
+         tsh> printf %t
+         2023-12-05 17:08:28
+
+         tsh> printf d\nc\nw
+d
+c
+w
+
+
           
 Help:
           Help is a command you can use as a user guide of this simple shell. 
