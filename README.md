@@ -19,12 +19,11 @@ test:    tsh> printf %bd
          tsh> printf %t
          2023-12-05 17:08:28
 
-         tsh> printf d\nc\nw
+      tsh> printf d\nc\nw
 d
 c
 w
-
-
+tsh> 
           
 Help:
           Help is a command you can use as a user guide of this simple shell. 
