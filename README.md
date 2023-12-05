@@ -29,7 +29,6 @@ test:
       c
       
       w
-tsh> 
           
 Help:
           Help is a command you can use as a user guide of this simple shell. 
