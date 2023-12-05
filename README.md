@@ -33,18 +33,12 @@ Help:
 
          
 tsh> help
-
-  Welcome to the simple shell!
-  
-  printf - Write the formatted arguments to the standard output under the control of the format. 
-  
-  help - Display helpful information about builtin commands. If pattern is specified, help gives detailed help on all commands matching pattern, otherwise a list of the builtins is printed.
-  
-  Echo - Print out the line to screen
-  
-  Read - One line is read from the standard input, or from the file descriptor fd supplied as an argument
-  
-  quit - Exit the shell
+Welcome to the simple shell!
+printf - Write the formatted arguments to the standard output under the control of the format. 
+help - Display helpful information about builtin commands. If pattern is specified, help gives detailed help on all commands matching pattern, otherwise a list of the builtins is printed.
+Echo - Print out the line to screen
+Read - One line is read from the standard input, or from the file descriptor fd supplied as an argument
+quit - Exit the shell
 
 Features:
 
