@@ -36,6 +36,7 @@ testing print string
 tsh> printf hello world
 hello world
 ```
+
           
 Help:
           Help is a command you can use as a user guide of this simple shell. 
@@ -50,6 +51,7 @@ Echo - Print out the line to screen
 Read - One line is read from the standard input, or from the file descriptor fd supplied as an argument
 quit - Exit the shell
 ```
+
 
 Alias: 
           Alias is a command you can use to replace a single command with another name.
@@ -77,6 +79,7 @@ tsh> alias
 alias list='cd'
 alias ok='cat'
 ```
+
 
 Features:
 
