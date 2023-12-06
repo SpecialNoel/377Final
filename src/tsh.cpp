@@ -140,7 +140,7 @@ void simple_shell::printf_command(char** cmdTokens, ...) {
         // Handle %b - expand backslash escape sequences
         // Note: This assumes that cmdTokens[i + 1] is a string
         std::string expanded;
-        expand_escape_sequences(cmdTokens[i + 1], expanded);
+        binary_get(cmdTokens[i + 1], expanded);
         formatString.replace(pos, 16, expanded);
       } else if (formatString[pos + 1] == 't') {
         //cout << ctime(&timenow) <<  endl;
@@ -256,7 +256,7 @@ bool simple_shell::isEcho(char* cmd) {
   return(cmdStr.compare(echoCommand) == 0);
 }
 
-void simple_shell::expand_escape_sequences(const std::string& input, std::string& output) {
+void simple_shell::binary_get(const std::string& input, std::string& output) {
   output.clear();  // Clear the output string before appending characters
   std::ostringstream oss;
   for (size_t i = 0; i < input.size(); ++i) {
