@@ -25,7 +25,9 @@ int main() {
       } else if (shell->isEcho(tokens->cmd[0])) {
         shell->echo_command(tokens->cmd);
         cout << endl;
-      } else {
+      } else if (shell->isAlias(tokens->cmd[0])) {
+      	shell->alias_command(tokens->cmd);
+      } else else {
         // only this command supports pipe commands
         shell->exec_command(tokens, tokenCount);
       }
