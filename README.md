@@ -58,6 +58,22 @@ Alias:
 alias list='ls'
 ```
 will replace "list" with the ls command when it is used.
+          The current version of this alias command does not support the additional options which the alias command in linux system has, and it can only take one command inside the [value] part. Wrong syntax will cause errors.
+
+Tests:
+```
+tsh> alias list='ls'
+tsh> alias
+alias list='ls'
+tsh> alias list='cd'
+tsh> alias
+alias list='cd'
+tsh> alias ok='cat'
+tsh> alias
+alias list='cd'
+alias ok='cat'
+tsh> 
+```
 
 Features:
 
