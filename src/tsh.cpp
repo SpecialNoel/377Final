@@ -92,6 +92,19 @@ void simple_shell::exec_command(CmdTokens* tokens, int tokenCount) {
         close(pipes[i][1]);
       }
 
+      // Try replace some parts of args with existing aliases.
+      int length = sizeof(args)/sizeof(args[0]);
+      for (int j = 0; j < length; j++) {
+     	string currentElement = args[0];
+        for (list<Pair>::iterator it = pairs.begin(); it != pairs.end(); it++) {
+          string currentName = (it)->name;
+          if (currentElement.compare(currentName) == 0) {
+            args[0] = (it)->value;
+            break;
+          }
+        }
+      }
+
       execvp(args[0], args);
       perror("execvp error in child 1");
       exit(1);
@@ -179,9 +192,95 @@ void simple_shell::help_command() {
   cout << "Welcome to the simple shell!" << endl;
   cout << "  printf to print" << endl;
   cout << "  help - Display this help message" << endl;
+  cout << " alias - Make shortcut for a single command" << endl;
   cout << "  echo - Output provided arguments" << endl;
   cout << "  read - Read and store one line from standard input" << endl;
   cout << "  quit - Exit the shell" << endl;
+}
+
+// this function is for the permanent alias, not the temporary one
+// Note: this function does not support options on alias
+//       also, it only work for a single command without options as value
+// EX: alias list='ls'       is a correct input
+// EX: alias list='ls -a'    will cause error
+// EX: alias -p              will cause error
+void simple_shell::alias_command(char** cmdTokens) {
+  // Set a shortcut command for another command
+  // Syntax: alias [name]='[value]'
+
+  // Print out all existing aliases
+  if (cmdTokens[1] == nullptr) {
+    //cout << "listing begin" << endl;
+    for (list<Pair>::iterator it = pairs.begin(); it != pairs.end(); it++) {
+      cout << "alias " << (it)->name << "='" << (it)->value << "'"  << endl;
+      //cout << "name: " << (it)->name << endl;
+      //cout << "value: " << (it)->value << endl;
+    }
+    //cout << "listing completed" << endl;
+  } else {
+    // Parse alias command
+    char** tokens = (char**)malloc(sizeof(char*));
+    parse_alias_command(cmdTokens[1], tokens);
+    
+    // Extracting name
+    int length1 = strlen(tokens[0]);
+    char* name = (char*) malloc(sizeof(char));
+    strncpy(name, tokens[0], length1);
+    name[length1] = '\0';
+    //cout << "name: " << name << endl;
+    
+    // Extracting value
+    int length2 = strlen(tokens[1]);
+    char* value = (char*) malloc(sizeof(char));
+    strncpy(value, tokens[1] + 1, length2 - 2);
+    value[length2 - 1] = '\0';
+    //cout << "value: " << value << endl;
+
+    // Iterate through pairs to see if name already exists
+    // If the name exists, erase that pair
+    string nameStr = name;
+    for (list<Pair>::iterator it = pairs.begin(); it != pairs.end(); it++) {
+      string currentName = (it)->name;
+      //cout << "currentName: " << currentName << endl;
+      //cout << "nameStr: " << nameStr <<	endl;
+      if (nameStr.compare(currentName) == 0) {
+	      pairs.erase(it);
+	      break;
+      }
+    }
+    
+    // Add the input command to pairs
+    Pair newPair = {.name = name, .value = value};
+    pairs.push_back(newPair);
+        
+    //cout << "new alias added" << endl;
+    
+    // Replace command received from parse with its aliases
+    // Replace [name] with [value]
+  }
+}
+
+void simple_shell::parse_alias_command(char* cmd, char** tokens) {
+  // Tokenize the command of alias into arguments
+  // Checks if cmd is valid   
+  size_t length = strlen(cmd);
+  if (length > 0 && cmd[length - 1] == '\n') {
+    cmd[length - 1] = '\0';
+  }
+
+  // Splits cmd via the equal sign
+  char* delimiter = "=";
+  char* temp1 = strtok(cmd, delimiter);
+  tokens[0] = temp1;
+  char* temp2 = strtok(NULL, delimiter);
+  tokens[1] = temp2;
+}
+
+bool simple_shell::isAlias(char* cmd){
+  // Check for the command "alias", shell will reponse accordingly  
+  string cmdStr = cmd;
+  string aliasCommand = "alias";
+  return (cmdStr.compare(aliasCommand)==0);
 }
 
 void simple_shell::read_command(char** cmdTokens, ...) {
