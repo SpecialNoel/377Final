@@ -50,6 +50,15 @@ Echo - Print out the line to screen
 Read - One line is read from the standard input, or from the file descriptor fd supplied as an argument
 quit - Exit the shell
 ```
+
+Alias: 
+          Alias is a command you can use to replace a single command with another name.
+          To use this command, you can go to shell and type command in this syntax: alias [name]='[value]'. For example: 
+```
+alias list='ls'
+```
+will replace "list" with the ls command when it is used.
+
 Features:
 
 Infinite pipeline:
