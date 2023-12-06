@@ -7,11 +7,18 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <iostream>
+#include <list>
 
 typedef struct CmdTokens CmdTokens;
 struct CmdTokens {
   char** cmd;
   CmdTokens* pipe;
+};
+
+typedef struct Pair Pair;
+struct Pair {
+  char* name;
+  char* value;
 };
 
 class simple_shell {
@@ -32,6 +39,11 @@ class simple_shell {
   // storing the last line that was entered into the "read" command in a pair with it's variable
   // "$REPLY" if no variable provided
   std::pair<std::string, std::string> read_line;
+
+  std::list<Pair> pairs;
+  void alias_command(char** cmdTokens);
+  void parse_alias_command(char* cmd, char** tokens);
+  bool isAlias(char* cmd);
 };
 
 #endif
