@@ -79,7 +79,40 @@ tsh> alias
 alias list='cd'
 alias ok='cat'
 ```
+Read command: 
+```
+Reads a line from standard input and stores it as a local variable. Without providing a variable, the line read from standard input is stored in $REPLY. If providing a variable for read, use echo with $ + variable to retrieve the input.
+```
 
+Read test 1 (no variable):
+```
+tsh> read
+hello world
+tsh> echo $REPLY
+hello world
+tsh> 
+```
+
+Read test 2 (with variable):
+```
+tsh> read testVar
+hello world
+tsh> echo $testVar
+hello world
+tsh> 
+```
+
+Echo command:
+```
+Takes in arguments and outputs them to console, terminated with a newline character.
+```
+
+Echo test:
+```
+tsh> echo hello world
+hello world 
+tsh> 
+```
 
 Features:
 
